@@ -1,10 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import useStyles from './styles'
 import { TextField, Button, Typography, Paper } from '@material-ui/core'
 import FileBase from 'react-file-base64'
-import { useDispatch } from 'react-redux'
-import { createPost } from '../../actions/posts'
-function Form() {
+import { useDispatch, useSelector } from 'react-redux'
+import { createPost, updatePost } from '../../actions/posts'
+
+//get post id
+
+
+
+
+const Form = ({ currentId }) => {
   const classes = useStyles()
   const [postData, setPostData] = useState({
     creator: '', title: '', message: '', tags: '', selectedFile: ''
@@ -12,11 +18,21 @@ function Form() {
 
 
   const dispatch = useDispatch()
-
-
+  const post = useSelector((state) => currentId ? state.posts.find((p) => p._id === currentId) : null)
+  useEffect(() => {
+    if (post) setPostData(post)
+  }, [post])
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createPost(postData))
+    if (currentId) {
+      dispatch(updatePost(currentId, postData))
+    } else {
+      dispatch(createPost(postData))
+
+    }
+
+
+
   }
 
   const clear = () => {
@@ -31,7 +47,7 @@ function Form() {
         <Typography variant='h6'>
           Creating a Memory
         </Typography>
-        
+
         <TextField
           name="creator"
           variant='outlined'
