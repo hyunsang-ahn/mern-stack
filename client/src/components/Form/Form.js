@@ -10,7 +10,7 @@ import { createPost, updatePost } from '../../actions/posts'
 
 
 
-const Form = ({ currentId }) => {
+const Form = ({ currentId, setCurrentId }) => {
   const classes = useStyles()
   const [postData, setPostData] = useState({
     creator: '', title: '', message: '', tags: '', selectedFile: ''
@@ -30,13 +30,18 @@ const Form = ({ currentId }) => {
       dispatch(createPost(postData))
 
     }
+    clear()
 
 
 
   }
 
   const clear = () => {
+    setCurrentId(null);
+    setPostData({
+      creator: '', title: '', message: '', tags: '', selectedFile: ''
 
+    })
   }
   return (
     <Paper className={classes.paper}>
@@ -45,7 +50,7 @@ const Form = ({ currentId }) => {
 
 
         <Typography variant='h6'>
-          Creating a Memory
+          {currentId ? 'Editing a Memory' : 'Creating a Memory'}
         </Typography>
 
         <TextField
@@ -83,14 +88,10 @@ const Form = ({ currentId }) => {
           value={postData.tags}
           onChange={(e) => setPostData({ ...postData, tags: e.target.value })}
         />
-        <div className={classes.fileInput}>
-          <FileBase
-            type="file"
-            multiple={false}
-            onDone={(base64) => setPostData({ ...postData, selectedFile: base64 })}
 
-          />
-        </div>
+        <div className={classes.fileInput}>
+          <FileBase type="file" multiple={false} onDone={({ base64 }) => setPostData({ ...postData, selectedFile: base64 })} /></div>
+
         <Button className={classes.buttonSubmit} color='primary' size="large" type="submit" fullWidth>Submit</Button>
         <Button variant='contained' color='secondary' size='small' onClick={clear} fullWidth>Clear</Button>
 
