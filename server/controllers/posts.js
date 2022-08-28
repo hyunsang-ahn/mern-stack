@@ -1,7 +1,8 @@
+import express from 'express';
 import mongoose from "mongoose";
 import PostMessage from "../models/postMessage.js"
 
-
+const router = express.Router();
 export const getPosts = async (req, res) => {
   try {
     const postMessages = await PostMessage.find();
@@ -46,7 +47,7 @@ export const updatePost = async (req, res) => {
 
 export const deletePost = async (req, res) => {
   const _id = req.params.id
-  console.log('_id================',_id)
+  console.log('_id================', _id)
   const post = req.body
   if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('NO POST WITH THAT ID')
   const deletedPost = await PostMessage.findByIdAndRemove(_id)
@@ -54,3 +55,23 @@ export const deletePost = async (req, res) => {
   res.json({ message: 'postt deleted success' })
 
 }
+
+
+export const likePost = async (req, res) => {
+  console.log('req.params====================', req.params)
+  const { id } = req.params
+
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('NO POST WITH THAT ID')
+
+  const post = await PostMessage.findById(id);
+  const updatedPost = await PostMessage.findByIdAndUpdate(id, { likeCount: post.likeCount + 1 }, { new: true });
+
+
+  res.json(updatedPost);
+
+
+
+}
+
+
+export default router;

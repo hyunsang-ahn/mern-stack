@@ -66,7 +66,7 @@ export const updatePost = (id, post) => async (dispatch) => {
 
 export const deletePost = (id) => async (dispatch) => {
   try {
-    const { data } = await api.deletePost(id);
+    await api.deletePost(id);
     dispatch({ type: 'DELETE', payload: id });
 
   } catch (error) {
@@ -75,3 +75,16 @@ export const deletePost = (id) => async (dispatch) => {
   }
 };
 
+export const likePost = (id) => async (dispatch) => {
+  console.log('id===============', id)
+  try {
+
+    const { data } = await likePost(id)
+    console.log('data===============', data)
+
+    dispatch({ type: 'LIKE', payload: data })
+  } catch (error) {
+    console.log(error.message);
+
+  }
+}
