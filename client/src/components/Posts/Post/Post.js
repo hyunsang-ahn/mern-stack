@@ -11,6 +11,7 @@ import { deletePost, likePost } from '../../../actions/posts'
 const Post = ({ post, setCurrentId }) => {
   const classes = useStyles()
   const dispatch = useDispatch()
+  console.log('post.likeCount===============',post.likeCount)
   return (
     <Card className={classes.card}>
       <CardMedia className={classes.media} image={post.selectedFile} title={post.title} />
@@ -31,18 +32,18 @@ const Post = ({ post, setCurrentId }) => {
       <Typography className={classes.title} variant="h5" gutterBottom>{post.title}</Typography>
 
       <CardContent>
-        <Typography className={classes.title} variant="h5" gutterBottom>{post.message}</Typography>
+        <Typography className={classes.title} variant="body2" color="textSecondary" component="p">{post.message}</Typography>
 
       </CardContent>
       <CardContent className={classes.cardActions}>
         <Button size="small" color="primary" onClick={() => dispatch(likePost(post._id))}>
           <ThumUpAltIcon fontSize="small" />
-          LIKE
+          &nbsp; 좋아요 &nbsp;
           {post.likeCount}
         </Button>
         <Button size="small" color="primary" onClick={() => { dispatch(deletePost(post._id)) }}>
           <DeleteIcon fontSize="small" />
-          Delete
+          삭제
         </Button>
       </CardContent>
 
