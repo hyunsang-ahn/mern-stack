@@ -7,10 +7,10 @@ import Home from './components/Home/Home';
 
 import Auth from './components/Auth/Auth';
 
-
 const App = () => {
 
   return (
+
     <Router>
 
       <Container maxWidth='lg'>
@@ -22,6 +22,7 @@ const App = () => {
         </Routes>
       </Container>
     </Router>
+
   )
 }
 

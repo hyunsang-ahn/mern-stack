@@ -7,10 +7,13 @@ import { Avatar, Button, Paper, Grid, Typography, Container, TextField } from '@
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import useStyles from './styles'
 import Input from './Input';
-const Auth = () => {
-  const isSignUp = false
+import Icon from './Icon';
+import { GoogleLogin } from 'react-google-login';
 
-  console.log('isSignUp===============',isSignUp)
+const Auth = () => {
+  const [isSignUp, setIsSignUp] = useState(false)
+
+  console.log('isSignUp===============', isSignUp)
   const classes = useStyles()
   const [showPassword, SetShowPassword] = useState(false)
 
@@ -23,6 +26,17 @@ const Auth = () => {
   }
   const handleShowPassword = () => {
     SetShowPassword(!showPassword)
+  }
+  const switchMode = () => {
+    setIsSignUp(!isSignUp)
+  }
+
+  const googleSuccess = (res) => {
+    console.log(res)
+  }
+  const googleFailure = (error) => {
+    console.log('google sign in was unsucessful.... try again later')
+    console.log(error)
   }
   return (
     <Container component="main" maxWidth="xs">
@@ -57,9 +71,28 @@ const Auth = () => {
             {isSignUp && <Input name="confirmPassword" label="Repeat Password" handleChange={handleChange} type="password" />
             }
           </Grid>
+
           <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
             {isSignUp ? 'Sign Up ' : 'Sign In'}
           </Button>
+          <GoogleLogin
+            clientId="66618411565-2j4jhti4j7skhnql19rsvbs2fk9uvhkc.apps.googleusercontent.com"
+            render={renderProps => (
+              <button onClick={renderProps.onClick} disabled={renderProps.disabled}>This is my custom Google button</button>
+            )}
+            buttonText="Login"
+            onSuccess={googleSuccess}
+            onFailure={googleFailure}
+            cookiePolicy={'single_host_origin'}
+          />
+
+          <Grid container justifyContent='flex-end'>
+            <Grid item>
+              <Button onClick={switchMode}>
+                {isSignUp ? '로그인' : '회원가입'}
+              </Button>
+            </Grid>
+          </Grid>
         </form>
       </Paper>
 
