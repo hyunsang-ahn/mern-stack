@@ -8,7 +8,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import useStyles from './styles'
 import Input from './Input';
 import Icon from './Icon';
-import { GoogleLogin } from 'react-google-login';
+import { GoogleLogin } from '@react-oauth/google';
+
 
 const Auth = () => {
   const [isSignUp, setIsSignUp] = useState(false)
@@ -82,13 +83,14 @@ const Auth = () => {
 
 
           <GoogleLogin
-            clientId={clientId}
-            responseType={"id_token"}
-            onSuccess={onSuccess}
-            onFailure={onFailure}
-            cookiePolicy={'single_host_origin'}
-
-          />
+            onSuccess={credentialResponse => {
+              console.log(credentialResponse);
+            }}
+            onError={() => {
+              console.log('Login Failed');
+            }}
+            useOneTap
+          />;
           <Grid container justifyContent='flex-end'>
             <Grid item>
               <Button onClick={switchMode}>
