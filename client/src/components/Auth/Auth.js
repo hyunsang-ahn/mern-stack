@@ -16,6 +16,7 @@ const Auth = () => {
   console.log('isSignUp===============', isSignUp)
   const classes = useStyles()
   const [showPassword, SetShowPassword] = useState(false)
+  const clientId = "66618411565-2j4jhti4j7skhnql19rsvbs2fk9uvhkc.apps.googleusercontent.com"
 
 
   const handleSubmit = () => {
@@ -31,12 +32,15 @@ const Auth = () => {
     setIsSignUp(!isSignUp)
   }
 
-  const googleSuccess = (res) => {
-    console.log(res)
+  const onSuccess = async (response) => {
+    console.log(response);
+
+
+
   }
-  const googleFailure = (error) => {
-    console.log('google sign in was unsucessful.... try again later')
-    console.log(error)
+
+  const onFailure = (error) => {
+    console.log(error);
   }
   return (
     <Container component="main" maxWidth="xs">
@@ -75,17 +79,16 @@ const Auth = () => {
           <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
             {isSignUp ? 'Sign Up ' : 'Sign In'}
           </Button>
-          <GoogleLogin
-            clientId="66618411565-2j4jhti4j7skhnql19rsvbs2fk9uvhkc.apps.googleusercontent.com"
-            render={renderProps => (
-              <button onClick={renderProps.onClick} disabled={renderProps.disabled}>This is my custom Google button</button>
-            )}
-            buttonText="Login"
-            onSuccess={googleSuccess}
-            onFailure={googleFailure}
-            cookiePolicy={'single_host_origin'}
-          />
 
+
+          <GoogleLogin
+            clientId={clientId}
+            responseType={"id_token"}
+            onSuccess={onSuccess}
+            onFailure={onFailure}
+            cookiePolicy={'single_host_origin'}
+
+          />
           <Grid container justifyContent='flex-end'>
             <Grid item>
               <Button onClick={switchMode}>
