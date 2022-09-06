@@ -9,7 +9,7 @@ import useStyles from './styles'
 import Input from './Input';
 import Icon from './Icon';
 import { GoogleLogin } from '@react-oauth/google';
-
+import jwt_decode from 'jwt-decode'
 
 const Auth = () => {
   const [isSignUp, setIsSignUp] = useState(false)
@@ -35,9 +35,12 @@ const Auth = () => {
 
   const onSuccess = async (response) => {
     console.log(response);
+  }
 
-
-
+  const createOrGetUser = (response) => {
+    //증명 json web token
+    const decoded = jwt_decode(response.credential)
+    console.log(decoded)
   }
 
   const onFailure = (error) => {
@@ -83,13 +86,13 @@ const Auth = () => {
 
 
           <GoogleLogin
-            onSuccess={credentialResponse => {
-              console.log(credentialResponse);
+            onSuccess={res => {
+              createOrGetUser(res);
             }}
             onError={() => {
               console.log('Login Failed');
             }}
-            useOneTap
+          // useOneTap
           />;
           <Grid container justifyContent='flex-end'>
             <Grid item>
