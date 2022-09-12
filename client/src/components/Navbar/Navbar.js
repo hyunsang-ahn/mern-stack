@@ -4,7 +4,7 @@ import useStyles from "./styles";
 import memories from "../../images/memories.png";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const classes = useStyles();
@@ -12,12 +12,19 @@ const Navbar = () => {
   console.log(user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const logout = () => {
     dispatch({ type: "LOGOUT" });
     navigate('/')
     setUser(null)
   };
+
+  useEffect(() => {
+    const token = user?.token;
+    setUser(JSON.parse(localStorage.getItem('profile')))
+  },[location])
+
   return (
     <AppBar className={classes.appBar} position="static" color="inherit">
       <div className={classes.brandContainer}>

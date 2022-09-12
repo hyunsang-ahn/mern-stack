@@ -15,20 +15,45 @@ import Icon from "./Icon";
 import { GoogleLogin } from "@react-oauth/google";
 import jwt_decode from "jwt-decode";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { signin, signup } from '../../actions/auth'
+const initialState = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  confirmPassword: ''
+}
 const Auth = () => {
-  const [isSignUp, setIsSignUp] = useState(false);
 
-  console.log("isSignUp===============", isSignUp);
   const classes = useStyles();
   const [showPassword, SetShowPassword] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [formData, setFormData] = useState(initialState);
+  const history = useLocation()
   const dispatch = useDispatch();
   const clientId =
     "66618411565-2j4jhti4j7skhnql19rsvbs2fk9uvhkc.apps.googleusercontent.com";
   // v6
   const navigate = useNavigate();
-  const handleSubmit = () => {};
-  const handleChange = () => {};
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (isSignUp) {
+      dispatch(signup(formData, history))
+    } else {
+      dispatch(signin(formData, history))
+
+    }
+  };
+
+  const handleChange = (e) => {
+
+    setFormData({
+      ...formData, [e.target.name]: e.target.value
+    })
+
+  };
   const handleShowPassword = () => {
     SetShowPassword(!showPassword);
   };
@@ -39,7 +64,8 @@ const Auth = () => {
   const createOrGetUser = (response) => {
     //증명 json web token
     const decoded = jwt_decode(response.credential);
-    // console.log(decoded);
+    console.log(decoded);
+    //jti가 토큰임           decoded.jti
     try {
       dispatch({ type: "AUTH", data: decoded });
       navigate("/");
@@ -48,9 +74,6 @@ const Auth = () => {
     }
   };
 
-  const onFailure = (error) => {
-    console.log(error);
-  };
   return (
     <Container component="main" maxWidth="xs">
       <Paper className={classes.paper} elevation={3}>
@@ -71,8 +94,8 @@ const Auth = () => {
                   half
                 />
                 <Input
-                  name="firstName"
-                  label="First Name"
+                  name="lastName"
+                  label="Last Name"
                   handleChange={handleChange}
                   half
                 />
@@ -120,7 +143,7 @@ const Auth = () => {
             onError={() => {
               console.log("Login Failed");
             }}
-            // useOneTap
+          // useOneTap
           />
           <Grid container justifyContent="flex-end">
             <Grid item>
