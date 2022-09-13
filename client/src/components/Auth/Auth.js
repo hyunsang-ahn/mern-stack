@@ -59,6 +59,7 @@ const Auth = () => {
   };
   const switchMode = () => {
     setIsSignUp(!isSignUp);
+    SetShowPassword(false)
   };
 
   const createOrGetUser = (response) => {
