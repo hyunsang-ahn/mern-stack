@@ -10,5 +10,6 @@ morden web site pjt..
 
 google login
 
+google logout
 
 
