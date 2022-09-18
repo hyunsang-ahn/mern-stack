@@ -11,12 +11,12 @@ import { deletePost, likePost } from '../../../actions/posts'
 const Post = ({ post, setCurrentId }) => {
   const classes = useStyles()
   const dispatch = useDispatch()
-  console.log('post.likeCount===============',post.likeCount)
+  console.log('post.likeCount===============', post.likeCount)
   return (
     <Card className={classes.card}>
       <CardMedia className={classes.media} image={post.selectedFile} title={post.title} />
       <div className={classes.overlay}>
-        <Typography variant="h6">{post.creator}</Typography>
+        <Typography variant="h6">{post.name}</Typography>
         <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>
 
       </div>
