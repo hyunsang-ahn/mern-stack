@@ -28,7 +28,11 @@ const Form = ({ currentId, setCurrentId }) => {
     if (currentId === 0) {
       dispatch(updatePost({ ...postData, name: user?.result?.name }))
     } else {
-      dispatch(createPost(currentId, { ...postData, name: user?.result?.name }))
+      console.log('여기까지 정답')
+      console.log(currentId)
+      console.log(postData)
+      console.log(user?.result?.name)
+      dispatch(createPost({ currentId, ...postData, name: user?.result?.name }))
 
     }
     clear()

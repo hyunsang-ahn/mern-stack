@@ -23,7 +23,8 @@ const Navbar = () => {
   useEffect(() => {
     const token = user?.token;
     setUser(JSON.parse(localStorage.getItem('profile')))
-  },[location])
+    console.log('user================', user)
+  }, [location])
 
   return (
     <AppBar className={classes.appBar} position="static" color="inherit">
@@ -52,10 +53,11 @@ const Navbar = () => {
               alt={user.given_name}
               src={user.picture}
             >
-              {user.given_name}
+              {user.result.name[0].toUpperCase()}
+
             </Avatar>
             <Typography className={classes.userName} variant="h6">
-              {user.given_name}
+              {user.result.name}
             </Typography>
             <Button
               variant="contained"
