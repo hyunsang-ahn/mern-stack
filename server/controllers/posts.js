@@ -67,7 +67,7 @@ export const likePost = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('NO POST WITH THAT ID')
 
   const post = await PostMessage.findById(id);
-
+  console.log('post===================', post)
   const index = post.likes.findIndex((id) => id === String(req.userId));
 
   if (index === -1) {

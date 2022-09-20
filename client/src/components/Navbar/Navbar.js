@@ -5,6 +5,7 @@ import memories from "../../images/memories.png";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
+import decode from 'jwt-decode'
 
 const Navbar = () => {
   const classes = useStyles();
@@ -24,6 +25,15 @@ const Navbar = () => {
     const token = user?.token;
     setUser(JSON.parse(localStorage.getItem('profile')))
     console.log('user================', user)
+    if (token) {
+      const decodedToken = decode(token)
+      console.log('decodedToken==============', decodedToken)
+      if (decodedToken.exp * 1000 < new Date().getTime()) {
+        //특정 시간 이후 바로 로그아웃
+        logout()
+      }
+
+    }
   }, [location])
 
   return (
