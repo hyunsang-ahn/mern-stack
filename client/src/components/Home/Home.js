@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import useStyles from './styles'
 import { useDispatch } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import ChipInput from 'material-ui-chip-input'
 import { getPosts, getPostsBySearch } from '../../actions/posts'
 
@@ -26,7 +26,7 @@ const Home = () => {
     dispatch(getPosts())
   }, [currentId, dispatch])
   const query = useQuery();
-  // const history = useHistory()
+  const navigate = useNavigate()
   const page = query.get('page') || 1;
   const searchQuery = query.get('searchQuery')
   const [search, setSearch] = useState('')
@@ -48,13 +48,15 @@ const Home = () => {
   }
 
   const searchPost = () => {
-    if (search.trim()) {
+    if (search.trim() || tags) {
       //dispatch -> fetch search post
       dispatch(getPostsBySearch({
         search, tags: tags.join(',')
       }))
+      navigate(`/posts/search?searchQuery=${search || 'none'}&tags=${tags.join(',')}`)
+
     } else {
-      history.pushState('/')
+      navigate('/')
     }
   }
   return (
@@ -70,7 +72,8 @@ const Home = () => {
                 name="search"
                 variant='outlined'
                 label=" Search Memories"
-                fullwidth value="Test"
+                fullwidth
+                // value="Test"
                 onChange={(e) => (setSearch(e.target.value))}
                 onKeyPress={handleKeyPress}
               >
