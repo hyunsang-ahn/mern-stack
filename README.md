@@ -2,7 +2,7 @@
 
 mongo db
 express
-react
+react js
 node js
 
 
