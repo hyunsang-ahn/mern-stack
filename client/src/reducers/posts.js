@@ -5,7 +5,8 @@ import {
   LIKE,
   DELETE,
   START_LOADING,
-  END_LOADING
+  END_LOADING,
+  FETCH_POST
 } from "../constants/actionTypes";
 
 
@@ -21,6 +22,8 @@ export default (state = { isLoading: true, posts: [] }, action) => {
       return { ...state, posts: action.payload.data, currentPage: action.payload.currentPage, numberOfPage: action.payload.numberOfPage }
     case FETCH_BY_SEARCH:
       return { ...state, posts: action.payload };
+    case FETCH_POST:
+      return { ...state, post: action.payload };
     case CREATE:
       return { ...state, posts: [...state.posts, action.payload] }
     case UPDATE:

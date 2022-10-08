@@ -3,6 +3,27 @@ import mongoose from "mongoose";
 import PostMessage from "../models/postMessage.js"
 
 const router = express.Router();
+export const getPost = async (req, res) => {
+  const { id } = req.params
+  console.log('req===================', req.params)
+  try {
+
+
+    const post = await PostMessage.findById(id)
+
+
+    res.status(200).json(post)
+    // console.log(posts)
+    // console.log(Number(page))
+    // console.log(Math.ceil(total / LIMIT))
+
+  } catch (error) {
+    res.status(404).json({ message: error.message })
+
+  }
+}
+
+
 export const getPosts = async (req, res) => {
   const { page } = req.query
   try {
@@ -14,9 +35,9 @@ export const getPosts = async (req, res) => {
 
 
     res.status(200).json({ data: posts, currentPage: Number(page), numberOfPage: Math.ceil(total / LIMIT) })
-    console.log(posts)
-    console.log(Number(page))
-    console.log(Math.ceil(total / LIMIT))
+    // console.log(posts)
+    // console.log(Number(page))
+    // console.log(Math.ceil(total / LIMIT))
 
   } catch (error) {
     res.status(404).json({ message: error.message })
@@ -28,15 +49,15 @@ export const getPosts = async (req, res) => {
 // PARAMS -> /posts/123 -> id =123
 
 export const getPostsBySearch = async (req, res) => {
-  console.log('req======================', req.query)
+  // console.log('req======================', req.query)
   const { searchQuery, tags } = req.query
   try {
     const title = new RegExp(searchQuery, 'i');
-    console.log('title====================', title)
+    // console.log('title====================', title)
     const posts = await PostMessage.find({ $or: [{ title }, { tags: { $in: tags.split(',') } }] })
     // const posts = await PostMessage.find({ tags: { $in: tags.split(',') } })
 
-    console.log('tags====================', tags.split(','))
+    // console.log('tags====================', tags.split(','))
 
 
     res.json({ data: posts })
