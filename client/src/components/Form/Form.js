@@ -4,6 +4,8 @@ import { TextField, Button, Typography, Paper } from '@material-ui/core'
 import FileBase from 'react-file-base64'
 import { useDispatch, useSelector } from 'react-redux'
 import { createPost, updatePost } from '../../actions/posts'
+import { useNavigate } from 'react-router-dom'
+
 
 //get post id
 
@@ -18,21 +20,24 @@ const Form = ({ currentId, setCurrentId }) => {
 
 
   const dispatch = useDispatch()
-  const post = useSelector((state) => currentId ? state.posts.find((p) => p._id === currentId) : null)
+  const post = useSelector((state) => currentId ? state.posts.posts.find((p) => p._id === currentId) : null)
   const user = JSON.parse(localStorage.getItem('profile'))
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (post) setPostData(post)
   }, [post])
   const handleSubmit = (e) => {
     e.preventDefault();
     if (currentId === 0) {
-      dispatch(updatePost({ ...postData, name: user?.result?.name }))
+      dispatch(createPost({ currentId, ...postData, name: user?.result?.name }, navigate))
+
     } else {
       console.log('여기까지 정답')
       console.log(currentId)
       console.log(postData)
       console.log(user?.result?.name)
-      dispatch(createPost({ currentId, ...postData, name: user?.result?.name }))
+      dispatch(updatePost({ ...postData, name: user?.result?.name }))
 
     }
     clear()

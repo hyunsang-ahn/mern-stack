@@ -41,8 +41,8 @@ function PostDetail() {
 
     }
 
-    const recommendedPosts = posts.filter(({ _id }) => _id === post._id)
-
+    const recommendedPosts = posts.filter(({ _id }) => _id !== post._id)
+    const openPost = (id) => navigate(`/posts/${_id}`)
     return (
         <Paper>
             <div className={classes.card}>
@@ -63,12 +63,19 @@ function PostDetail() {
                 </div>
             </div>
             {recommendedPosts.length && (<div className={classes.section}>
-                <Typography gutterButton variant='h5'>you might also like : </Typography>
+                <Typography gutterBottom variant='h5'>you might also like : </Typography>
                 <Divider />
                 <div className={classes.recommendedPosts}>
                     {recommendedPosts.map(({ title, message, name, likes, selectedFile, _id }) => (
-                        <div>
-                            {title}
+                        <div style={{ margins: '20px', cursor: 'pointer' }} onClick={() => openPost(_id)} key={_id}>
+                            <Typography gutterBottom variant='h6'>{title}</Typography>
+                            <Typography gutterBottom variant='subtitle2'>{name}</Typography>
+                            <Typography gutterBottom variant='subtitle2'>{message}</Typography>
+                            <Typography gutterBottom variant='subtitle1'>{likes.length}</Typography>
+                            <img src={selectedFile} width="200px" />
+
+
+
                         </div>
                     ))}
                 </div>
