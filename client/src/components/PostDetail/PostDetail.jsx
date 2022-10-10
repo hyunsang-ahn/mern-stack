@@ -3,7 +3,11 @@ import { Paper, Typography, CircularProgress, Divider } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
 
+<<<<<<< HEAD
 import { getPost, getPostsBySearch } from '../../actions/posts'
+=======
+import { getPost } from '../../actions/posts'
+>>>>>>> 5238d237f52a0c76b87e2a83e19fec7c4e85d617
 import moment from 'moment'
 import useStyles from './styles'
 function PostDetail() {
@@ -17,12 +21,15 @@ function PostDetail() {
         dispatch(getPost(id))
 
     }, [id])
+<<<<<<< HEAD
 
     useEffect(() => {
         if (post) {
             dispatch(getPostsBySearch({ search: 'none', tags: post?.tags.join(',') }))
         }
     }, [post])
+=======
+>>>>>>> 5238d237f52a0c76b87e2a83e19fec7c4e85d617
     console.log('post detail id=====================', id)
     console.log('post detail isLoading=====================', isLoading)
     console.log('post detail posts=====================', posts)
@@ -40,9 +47,12 @@ function PostDetail() {
         )
 
     }
+<<<<<<< HEAD
 
     const recommendedPosts = posts.filter(({ _id }) => _id === post._id)
 
+=======
+>>>>>>> 5238d237f52a0c76b87e2a83e19fec7c4e85d617
     return (
         <Paper>
             <div className={classes.card}>
@@ -62,6 +72,7 @@ function PostDetail() {
                     <img className={classes.media} src={post.selectedFile || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} alt={post.title} />
                 </div>
             </div>
+<<<<<<< HEAD
             {recommendedPosts.length && (<div className={classes.section}>
                 <Typography gutterButton variant='h5'>you might also like : </Typography>
                 <Divider />
@@ -74,6 +85,8 @@ function PostDetail() {
                 </div>
 
             </div>)}
+=======
+>>>>>>> 5238d237f52a0c76b87e2a83e19fec7c4e85d617
         </Paper>
     )
 }
