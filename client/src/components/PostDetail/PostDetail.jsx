@@ -3,11 +3,7 @@ import { Paper, Typography, CircularProgress, Divider } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
 
-<<<<<<< HEAD
 import { getPost, getPostsBySearch } from '../../actions/posts'
-=======
-import { getPost } from '../../actions/posts'
->>>>>>> 5238d237f52a0c76b87e2a83e19fec7c4e85d617
 import moment from 'moment'
 import useStyles from './styles'
 function PostDetail() {
