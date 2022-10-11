@@ -23,10 +23,9 @@ function PostDetail() {
             dispatch(getPostsBySearch({ search: 'none', tags: post?.tags.join(',') }))
         }
     }, [post])
-    console.log('post detail id=====================', id)
-    console.log('post detail isLoading=====================', isLoading)
+
     console.log('post detail posts=====================', posts)
-    console.log('post detail posts=====================', post)
+    console.log('post detail post=====================', post)
 
     if (!posts) return null;
     if (!post) return null;
@@ -40,9 +39,9 @@ function PostDetail() {
         )
 
     }
-
     const recommendedPosts = posts.filter(({ _id }) => _id !== post._id)
-    const openPost = (id) => navigate(`/posts/${_id}`)
+    console.log('recommendedPosts==============', recommendedPosts)
+    const openPost = (id) => navigate(`/posts/${id}`)
     return (
         <Paper>
             <div className={classes.card}>
@@ -62,7 +61,7 @@ function PostDetail() {
                     <img className={classes.media} src={post.selectedFile || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} alt={post.title} />
                 </div>
             </div>
-            {recommendedPosts.length && (<div className={classes.section}>
+            {recommendedPosts.length ? (<div className={classes.section}>
                 <Typography gutterBottom variant='h5'>you might also like : </Typography>
                 <Divider />
                 <div className={classes.recommendedPosts}>
@@ -80,7 +79,7 @@ function PostDetail() {
                     ))}
                 </div>
 
-            </div>)}
+            </div>) : <div></div>}
         </Paper>
     )
 }
