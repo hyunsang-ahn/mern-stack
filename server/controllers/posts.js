@@ -145,13 +145,21 @@ export const commentPost = async (req, res) => {
   const { id } = req.params;
   const { value } = req.body;
 
+<<<<<<< HEAD
   const post = await PostMessage.findById(id)
+=======
+  const psot = await PostMessage.findById(id)
+>>>>>>> 20fce58d79ffe6fbc657cd8a03354c1d1977f3c1
 
   post.comments.push(value)
 
   const updatedPost = await PostMessage.findByIdAndUpdate(id, post, { new: true })
 
+<<<<<<< HEAD
   res.json(updatedPost)
+=======
+  res.json(updatePost)
+>>>>>>> 20fce58d79ffe6fbc657cd8a03354c1d1977f3c1
 }
 
 export default router;

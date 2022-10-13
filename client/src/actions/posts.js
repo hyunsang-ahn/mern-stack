@@ -127,10 +127,17 @@ export const likePost = (id) => async (dispatch) => {
 export const commentPost = (value, id) => async (dispatch) => {
   try {
     const { data } = await api.comment(value, id)
+<<<<<<< HEAD
     dispatch({ type: COMMENT, payload: data })
     return data.comments
 
   } catch (error) {
     console.log(error)
+=======
+    console.log(data)
+
+  } catch (error) {
+
+>>>>>>> 20fce58d79ffe6fbc657cd8a03354c1d1977f3c1
   }
 }
