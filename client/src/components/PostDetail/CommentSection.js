@@ -4,24 +4,26 @@ import { useDispatch } from 'react-redux'
 import useStyles from './styles'
 import { commentPost } from '../../actions/posts.js'
 const CommentSection = ({ post }) => {
-<<<<<<< HEAD
     console.log(post)
     const classes = useStyles()
     const [comments, setComments] = useState(post?.comments)
     const [comment, setComment] = useState('')
     const dispatch = useDispatch()
     const user = JSON.parse(localStorage.getItem('profile'))
-=======
-    const classes = useStyles()
-    const [comments, setComments] = useState([1, 2, 3, 4])
-    const [comment, setComment] = useState('')
-    const dispatch = useDispatch()
-    const user = JSON.parse(localStorage.getItem('user'))
->>>>>>> 20fce58d79ffe6fbc657cd8a03354c1d1977f3c1
     console.log('user=================', user)
-    const handleClick = () => {
+    const commentsRef = useRef()
+
+
+
+    const handleClick = async () => {
         const finalComment = `${user.result.name} : ${comment}`
-        dispatch(commentPost(finalComment, post._id))
+
+
+        const newComments = await dispatch(commentPost(finalComment, post._id))
+        setComments(newComments)
+        setComment('')
+
+        commentsRef.current.scrollIntoView({ behavior: 'smooth' })
     }
     return (
         <div>
@@ -29,25 +31,17 @@ const CommentSection = ({ post }) => {
             <div classNmae={classes.commentsOuterContainer} >
                 <div className={classes.commentsInnerContainer}>
                     <Typography gutterButton variant="h6">Comments</Typography>
-<<<<<<< HEAD
                     {comments?.map((c, i) => (
                         <Typography key={i} gutterBottom variant='subtitle1'>
-                            {c}
+                            <strong>{c.split(': ')[0]}</strong>
+                            {c.split(':')[1]}
                         </Typography>
                     ))}
+                    <div ref={commentsRef} />
                 </div>
                 {/* {user?.result?.name && */}
                 {user &&
 
-=======
-                    {comments.map((c, i) => (
-                        <Typography key={i} gutterBottom variant='subtitle1'>
-                            comment {i}
-                        </Typography>
-                    ))}
-                </div>
-                {user &&
->>>>>>> 20fce58d79ffe6fbc657cd8a03354c1d1977f3c1
                     (<div style={{ width: '70%' }}>
                         <Typography gutterBottom variant='h6'>
                             Write a Comment
