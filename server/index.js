@@ -17,7 +17,7 @@ app.use(cors())
 app.use('/posts', postRoutes)
 app.use('/users', userRoutes)
 app.get('/', (req, res) => (
-  res.send('APP IS RUNNING!~~!~!~!')
+  res.send('APP IS RUNNI11NG!~~!~!~!')
 ))
 
 // const CONNETION_URL = 'mongodb+srv://admin:ReW86vMoeO7nhltT@cluster0.avuqeyr.mongodb.net/?retryWrites=true&w=majority'
